@@ -1,0 +1,75 @@
+class InventoryItem:
+    def __init__(self, name, quantity, price):
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+
+class Inventory:
+    def __init__(self):
+        self.items = []
+
+    def add_item(self, name, quantity, price):
+        item = InventoryItem(name, quantity, price)
+        self.items.append(item)
+        print(f"Added {quantity} {name}(s) to inventory.")
+
+    def update_item(self, name, new_quantity=None, new_price=None):
+        for item in self.items:
+            if item.name == name:
+                if new_quantity is not None:
+                    item.quantity = new_quantity
+                if new_price is not None:
+                    item.price = new_price
+                print(f"Updated {name} in inventory.")
+                return
+        print(f"{name} not found in inventory.")
+
+    def remove_item(self, name):
+        for item in self.items:
+            if item.name == name:
+                self.items.remove(item)
+                print(f"Removed {name} from inventory.")
+                return
+        print(f"{name} not found in inventory.")
+
+    def view_inventory(self):
+        print("\nCurrent Inventory:")
+        for item in self.items:
+            print(f"{item.name}: {item.quantity} (Price: ${item.price:.2f})")
+
+def main():
+    inventory = Inventory()
+
+    while True:
+        print("\nInventory Management System")
+        print("1. Add Item")
+        print("2. Update Item")
+        print("3. Remove Item")
+        print("4. View Inventory")
+        print("5. Exit")
+
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == '1':
+            name = input("Enter item name: ")
+            quantity = int(input("Enter quantity: "))
+            price = float(input("Enter price: "))
+            inventory.add_item(name, quantity, price)
+        elif choice == '2':
+            name = input("Enter item name to update: ")
+            new_quantity = int(input("Enter new quantity (or press Enter to skip): "))
+            new_price = float(input("Enter new price (or press Enter to skip): "))
+            inventory.update_item(name, new_quantity, new_price)
+        elif choice == '3':
+            name = input("Enter item name to remove: ")
+            inventory.remove_item(name)
+        elif choice == '4':
+            inventory.view_inventory()
+        elif choice == '5':
+            print("Exiting Inventory Management System. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
